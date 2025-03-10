@@ -1,6 +1,425 @@
 /******* Change Box Model ***************/
-*,
+/* *,
 *:before,
 *:after {
   box-sizing: border-box;
+} */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
+
+:root {
+    --primary-color: #2196f3;
+    --secondary-coloor: #0d47a1;
+    --accent3-color: #1976d2;
+    
+    --nav-background-color: #fec601;
+    --nav-link-color: #f9f9f9;
+    --nav-hover-link-color: #001F54;
+    --nav-hover-background-color: #FEFCFB;
+
+    --heading-font: Bree Serif, serif;
+       
+    
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    padding: 1rem;
+    
+}
+
+body {
+  font-family: var(--heading-font);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+footer {
+  font-family: var(--heading-font);
+  color: var(--nav-hover-background-color);
+  background-color: var(--nav-hover-link-color);
+  text-align: left;
+}
+
+
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: xx-large;
+  font-weight: bolder;
+}
+
+.siteName a, #tools a {
+  color: var(--nav-link-color) ;
+  text-decoration: none;
+  color: var(--nav-hover-link-color);
+}
+
+/* Header styling */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+header h1 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+header a {
+  text-decoration: none;
+  color: var(--nav-hover-link-color);
+  font-size:large;
+}
+
+/* Navigation */
+nav {
+  background-color: var(--nav-hover-link-color);
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  padding: 0;
+}
+
+nav ul li {
+  flex: 1;
+  text-align: center;
+}
+
+nav ul li a {
+  color: var(--nav-hover-background-color);
+  text-decoration: none;
+  display: block;
+  padding: 12px 5px;
+  font-size: 14px;
+}
+
+nav a:hover {
+    text-decoration: overline;
+    background-color: var(--secondary-coloor);
+    cursor: pointer;
+}
+
+/* Welcome section */
+.intro {
+  padding: 15px 10px;
+  color: var(--nav-hover-link-color);
+}
+
+.intro h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+/* Car container */
+.car-container {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.car-image {
+  text-align: center;
+}
+
+.car-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.car-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  max-width: 150px;
+}
+
+.car-title {
+  color: var(--nav-link-color);
+  background-color: var(--nav-hover-link-color);
+  padding: 5px;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.car-info ul {
+  list-style-type: none;
+  margin: 5px 0;
+}
+
+.car-info ul li {
+  color: var(--nav-hover-link-color);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.btn {
+  background-color: var(--nav-hover-link-color);
+  color: var(--nav-hover-background-color);
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Reviews Section */
+.reviews {
+  padding: 0 10px 15px 10px;
+}
+
+.reviews h3 {
+  border-bottom: 1px solid var(--nav-hover-link-color);
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: var(--nav-hover-link-color);
+}
+
+.reviews ul {
+  list-style-type: disc;
+  padding-left: 25px;
+}
+
+.reviews li {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: var(--nav-hover-link-color);
+}
+
+/* Upgrades Section */
+.upgrades {
+  padding: 0 10px 15px 10px;
+  
+}
+
+.upgrades h3 {
+  border-bottom: 1px solid var(--nav-hover-link-color);
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: var(--nav-hover-link-color);
+  margin-top: 10px;
+}
+
+.upgrade-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  
+}
+
+.upgrade-item {
+  text-align: center;
+  
+}
+
+.upgrade-item img {
+  width: 100%;
+  height: auto;
+  padding: 5px;
+}
+
+.upgrade-item p {
+  margin-top: 5px;
+  font-size: 14px;
+  color: var(--nav-hover-link-color);
+  text-decoration:none;
+}
+
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  color: var(--nav-link-color);
+  text-decoration: none;
+  font-size: small;
+  
+}
+
+
+
+/* Responsive Design */
+@media (min-width: 640px) {
+  
+  .parent {
+    display: flex;
+    font-family: var(--heading-font);
+    max-width: 800px;
+    margin: 0 auto;
+    padding-left: 10px;
+  }
+  
+  /* Section styling */
+  .upgrades, .reviews {
+    padding: 10px;
+    width: 50%;
+  }
+  section h2 {
+    color: var(--nav-hover-link-color);
+  }
+  /* Headings */
+  h3 {
+    color: var(--nav-hover-link-color);
+    border-bottom: 1px solid var(--nav-hover-link-color);
+    padding-bottom: 5px;
+    margin-top: 0;
+  }
+  
+  /* Upgrade items grid */
+  .upgrade-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+  }
+  
+  .upgrade-item {
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .upgrade-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-bottom: 5px;
+  }
+  
+  .upgrade-item p {
+    margin: 0;
+    color: var(--nav-hover-link-color);
+    font-size: small;
+  }
+  
+  /* Reviews section */
+  .reviews ul {
+    list-style-type: none;
+    padding-left: 15px;
+    margin-top: 20px;
+  }
+  
+  .reviews li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 15px;
+  }
+  
+  .reviews li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--nav-hover-link-color);
+  }
+  
+
+/* Flexbox container for car info and image */
+.car-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* Car information box */
+.car-info {
+  background-color: gray;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 250px;
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--nav-hover-background-color);
+  font-family: var(--heading-font);
+}
+
+/* Car title */
+.car-title {
+  color: var(--nav-hover-background-color);
+  font-weight: bold;
+  background-color: var(--nav-hover-link-color);
+
+}
+
+/* Style for the list */
+.car-info ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.car-info li {
+  color: var(--nav-hover-link-color);
+  font-size: 14px;
+}
+
+/* Button styling */
+.btn {
+  background-color: var(--nav-hover-link-color);
+  color: var(--nav-hover-background-color);
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  font-family: var(--heading-font);
+  font-size: x-large;
+}
+
+.btn:hover {
+  background-color: var(--accent3-color);
+}
+
+/* Image styling */
+.car-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+  div ul {
+    list-style-type: none;
+    flex-wrap: wrap;
+    
+  }
+  nav ul {
+    display: flex;
+    justify-content: space-evenly;
+    color: var(--nav-hover-background-color);
+    padding: 15px;
+    background-color: var(--nav-hover-link-color);
+    font-size:x-large;
+    font-weight: bolder;
+      
+  }
+
+  nav a:hover {
+    text-decoration: overline;
+    background-color: var(--secondary-coloor);
+    cursor: pointer;
+  }
+
+  footer {
+    font-family: var(--heading-font);
+    color: var(--nav-hover-background-color);
+    background-color: var(--nav-hover-link-color);
+    text-align: left;
+  }
 }
