@@ -12,6 +12,9 @@ const app = express();
 const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventory"); 
+const errorRoute = require("./routes/error");
+const utilities = require("./utilities");
+const errorMiddleware = require("./utilities/error-middleware");
 
 /* ***********************
  * View Engine and Templates
@@ -20,6 +23,14 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout"); // not at views root
 
+/* ***********************
+ * Middleware
+ *************************/
+app.use(async (req, res, next) => {
+  // Add navigation to all views
+  req.nav = await utilities.getNav();
+  next();
+});
 
 /* ***********************
  * Routes
@@ -28,12 +39,23 @@ app.use(static);
 
 // Index route
 app.get("/", baseController.buildHome);
+
 // Inventory routes
 app.use("/inv", inventoryRoute);
 
+// Error routes
+app.use("/error", errorRoute);
 
+// 404 route - must be after all other routes
+app.use(async (req, res, next) => {
+  next({status: 404, message: 'Sorry, we appear to have lost that page.'});
+});
 
-
+/* ***********************
+ * Express Error Handler
+ * Place after all other middleware
+ *************************/
+app.use(errorMiddleware);
 
 /* ***********************
  * Local Server Information
