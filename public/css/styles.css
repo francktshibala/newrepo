@@ -441,7 +441,7 @@ footer .links a:hover {
 }
 
 .intro .btn {
-  background-color: #4CAF50;
+  background-color: var(--nav-hover-link-color);
   color: white;
   border: none;
   padding: 8px 15px;
@@ -455,7 +455,7 @@ footer .links a:hover {
 }
 
 .intro .btn:hover {
-  background-color: #3e8e41;
+  background-color: var(--accent3-color);
 }
 
 /* Make sure the home page sections display correctly */
