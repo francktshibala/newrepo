@@ -44,8 +44,89 @@ async function getInventoryItemById(inv_id) {
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryItemById};
+/* ***************************
+ *  Check if classification exists
+ * ************************** */
+async function checkExistingClassification(classification_name) {
+  try {
+    const sql = "SELECT * FROM public.classification WHERE classification_name = $1"
+    const data = await pool.query(sql, [classification_name])
+    return data.rowCount > 0
+  } catch (error) {
+    console.error("Error checking for existing classification:", error)
+    throw error
+  }
+}
 
+/* ***************************
+ *  Add new classification
+ * ************************** */
+async function addClassification(classification_name) {
+  try {
+    const sql = "INSERT INTO public.classification (classification_name) VALUES ($1) RETURNING *"
+    const data = await pool.query(sql, [classification_name])
+    return data.rows[0]
+  } catch (error) {
+    console.error("Error adding classification:", error)
+    throw error
+  }
+}
 
+/* ***************************
+ *  Add new inventory item
+ * ************************** */
+async function addInventory(
+  classification_id,
+  inv_make,
+  inv_model,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_year,
+  inv_miles,
+  inv_color
+) {
+  try {
+    const sql = `
+      INSERT INTO public.inventory (
+        classification_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`
+    
+    const data = await pool.query(sql, [
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color
+    ])
+    
+    return data.rows[0]
+  } catch (error) {
+    console.error("Error adding inventory:", error)
+    throw error
+  }
+}
 
-
+module.exports = {
+  getClassifications, 
+  getInventoryByClassificationId, 
+  getInventoryItemById,
+  checkExistingClassification,
+  addClassification,
+  addInventory
+};

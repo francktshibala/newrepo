@@ -1,0 +1,50 @@
+<!-- Content Heading -->
+<h1>Add New Classification</h1>
+
+<!-- Message Block for displaying flash messages -->
+<% if (messages) { %>
+  <div class="notice">
+    <% messages.forEach(msg => { %>
+      <p><%= msg %></p>
+    <% }) %>
+  </div>
+<% } %>
+
+<!-- Error Block for validation errors -->
+<% if (errors) { %>
+  <div class="notice error-notice">
+    <ul>
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  </div>
+<% } %>
+
+<!-- Classification Form -->
+<div class="form-container">
+  <form id="add-classification-form" action="/inv/add-classification" method="post">
+    <p class="form-instructions">The new classification name cannot contain a space or special character of any kind.</p>
+    
+    <div class="form-group">
+      <label for="classification_name">Classification Name:</label>
+      <input type="text" id="classification_name" name="classification_name" required pattern="^[a-zA-Z0-9]+$" placeholder="e.g., Sedan, SUV, Truck">
+    </div>
+    
+    <button type="submit" class="btn">Add Classification</button>
+  </form>
+</div>
+
+<!-- Client-side validation -->
+<script>
+  // Client-side validation
+  document.getElementById('add-classification-form').addEventListener('submit', function(event) {
+    const input = document.getElementById('classification_name').value;
+    const pattern = /^[a-zA-Z0-9]+$/; // Only alphanumeric characters
+    
+    if (!pattern.test(input)) {
+      event.preventDefault();
+      alert("Classification name can only contain letters and numbers (no spaces or special characters).");
+    }
+  });
+</script>

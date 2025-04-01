@@ -14,6 +14,9 @@ const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventory"); 
 const errorRoute = require("./routes/error");
 const utilities = require("./utilities");
+const session = require("express-session");
+const flash = require("express-flash");
+const bodyParser = require("body-parser");
 const errorMiddleware = require("./utilities/error-middleware");
 
 /* ***********************
@@ -26,6 +29,22 @@ app.set("layout", "./layouts/layout"); // not at views root
 /* ***********************
  * Middleware
  *************************/
+// Body parser for handling POST requests
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Express Session
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // Set to true if using https
+}));
+
+// Express Flash
+app.use(flash());
+
+// Pass nav to all views
 app.use(async (req, res, next) => {
   // Add navigation to all views
   req.nav = await utilities.getNav();

@@ -465,6 +465,107 @@ footer .links a:hover {
   gap: 20px;
 }
 
+/* Form Styles */
+.form-container {
+  max-width: 600px;
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-instructions {
+  margin-bottom: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--nav-hover-link-color);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Management Links */
+.management-links {
+  margin: 20px 0;
+}
+
+.management-links h2 {
+  color: var(--nav-hover-link-color);
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 5px;
+}
+
+.management-links ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.management-links li {
+  margin-bottom: 10px;
+}
+
+.management-links a {
+  display: inline-block;
+  padding: 8px 15px;
+  background-color: var(--nav-hover-link-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.management-links a:hover {
+  background-color: var(--accent3-color);
+}
+
+/* Notice messages */
+.notice {
+  padding: 10px 15px;
+  margin: 15px 0;
+  border-radius: 4px;
+  background-color: #e8f4fd;
+  border-left: 5px solid var(--primary-color);
+}
+
+.error-notice {
+  background-color: #fee;
+  border-left: 5px solid #d9534f;
+}
+
+.notice p, .notice li {
+  margin: 5px 0;
+  color: #333;
+}
+
+.error-notice li {
+  color: #d9534f;
+}
+
 /* Responsive Design */
 @media (min-width: 768px) {
   /* For larger screens like third image */

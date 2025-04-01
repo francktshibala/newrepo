@@ -1,0 +1,30 @@
+<!-- Content Heading -->
+<h1>Inventory Management</h1>
+
+<!-- Message Block for displaying flash messages -->
+<% if (messages) { %>
+  <div class="notice">
+    <% if (Array.isArray(messages)) { %>
+      <% messages.forEach(msg => { %>
+        <p><%= msg %></p>
+      <% }) %>
+    <% } else if (typeof messages === 'object') { %>
+      <% Object.keys(messages).forEach(key => { %>
+        <% messages[key].forEach(msg => { %>
+          <p><%= msg %></p>
+        <% }) %>
+      <% }) %>
+    <% } else { %>
+      <p><%= messages %></p>
+    <% } %>
+  </div>
+<% } %>
+
+<!-- Management Links -->
+<div class="management-links">
+  <h2>Inventory Management Options</h2>
+  <ul>
+    <li><a href="/inv/add-classification" title="Add a new classification">Add New Classification</a></li>
+    <li><a href="/inv/add-inventory" title="Add a new vehicle to inventory">Add New Vehicle</a></li>
+  </ul>
+</div>
