@@ -1,0 +1,37 @@
+<!-- Account Management View -->
+<h1>Account Management</h1>
+
+<!-- Message Block -->
+<% if (messages && messages.length > 0) { %>
+  <div class="notice">
+    <% messages.forEach(msg => { %>
+      <p><%= msg %></p>
+    <% }) %>
+  </div>
+<% } %>
+
+<!-- Error Block -->
+<% if (errors) { %>
+  <div class="notice error-notice">
+    <ul>
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  </div>
+<% } %>
+
+<!-- Account Management Content -->
+<div class="management-links">
+  <!-- Welcome Message -->
+  <h2>Welcome <%= account_firstname %></h2>
+  
+  <!-- Update account information link - this appears for all users -->
+  <p><a href="/account/update/<%= account_id %>">Update Account Information</a></p>
+  
+  <!-- Inventory Management for Employee and Admin types only -->
+  <% if (account_type === 'Employee' || account_type === 'Admin') { %>
+    <h3>Inventory Management</h3>
+    <p><a href="/inv/">Manage Inventory</a></p>
+  <% } %>
+</div>

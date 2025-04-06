@@ -12,11 +12,13 @@ const app = express();
 const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventory"); 
+const accountRoute = require("./routes/accountRoute");
 const errorRoute = require("./routes/error");
 const utilities = require("./utilities");
 const session = require("express-session");
 const flash = require("express-flash");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const errorMiddleware = require("./utilities/error-middleware");
 
 /* ***********************
@@ -33,6 +35,9 @@ app.set("layout", "./layouts/layout"); // not at views root
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Cookie Parser
+app.use(cookieParser());
+
 // Express Session
 app.use(session({
   secret: process.env.SESSION_SECRET || 'your-secret-key',
@@ -44,10 +49,18 @@ app.use(session({
 // Express Flash
 app.use(flash());
 
+// JWT Token processing
+app.use(utilities.checkJWTToken);
+
 // Pass nav to all views
 app.use(async (req, res, next) => {
   // Add navigation to all views
   req.nav = await utilities.getNav();
+  
+  // Set res.locals.nav for EJS access
+  res.locals.nav = req.nav;
+  
+  // Continue
   next();
 });
 
@@ -61,6 +74,9 @@ app.get("/", baseController.buildHome);
 
 // Inventory routes
 app.use("/inv", inventoryRoute);
+
+// Account routes
+app.use("/account", accountRoute);
 
 // Error routes
 app.use("/error", errorRoute);
