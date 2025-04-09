@@ -51,10 +51,9 @@ invCont.buildManagementView = async function (req, res, next) {
   try {
     let nav = await utilities.getNav()
     let messages = null
-    if (req.flash) {
-      const flashMessages = req.flash()
-      if (Object.keys(flashMessages).length > 0) {
-        messages = flashMessages
+    if (req.flash && req.flash("notice")) {
+      messages = {
+        notice: req.flash("notice")
       }
     }
     res.render("./inventory/management", {
@@ -74,10 +73,16 @@ invCont.buildManagementView = async function (req, res, next) {
  * ************************** */
 invCont.buildAddClassification = async function (req, res, next) {
   let nav = await utilities.getNav()
+  let messages = null
+  if (req.flash && req.flash("notice")) {
+    messages = {
+      notice: req.flash("notice")
+    }
+  }
   res.render("./inventory/add-classification", {
     title: "Add New Classification",
     nav,
-    messages: null,
+    messages,
     errors: null,
   })
 }
@@ -95,33 +100,16 @@ invCont.addClassification = async function (req, res, next) {
       req.flash("notice", `The ${classification_name} classification was successfully added.`)
       // Generate a new navigation bar with the new classification
       let nav = await utilities.getNav()
-      let messages = null
-      if (req.flash) {
-        const flashMessages = req.flash()
-        if (Object.keys(flashMessages).length > 0) {
-          messages = flashMessages
-        }
-      }
-      res.status(201).render("inventory/management", {
-        title: "Inventory Management",
-        nav,
-        messages,
-        errors: null,
-      })
+      return res.redirect("/inv/")
     } else {
       req.flash("notice", "Sorry, the addition failed.")
       let nav = await utilities.getNav()
-      let messages = null
-      if (req.flash) {
-        const flashMessages = req.flash()
-        if (Object.keys(flashMessages).length > 0) {
-          messages = flashMessages
-        }
-      }
       res.status(501).render("inventory/add-classification", {
         title: "Add New Classification",
         nav,
-        messages,
+        messages: {
+          notice: req.flash("notice")
+        },
         errors: null,
       })
     }
@@ -129,17 +117,12 @@ invCont.addClassification = async function (req, res, next) {
     console.error("Add classification error:", error)
     req.flash("notice", "Sorry, there was an error processing the request.")
     let nav = await utilities.getNav()
-    let messages = null
-    if (req.flash) {
-      const flashMessages = req.flash()
-      if (Object.keys(flashMessages).length > 0) {
-        messages = flashMessages
-      }
-    }
     res.status(500).render("inventory/add-classification", {
       title: "Add New Classification",
       nav,
-      messages,
+      messages: {
+        notice: req.flash("notice")
+      },
       errors: null,
     })
   }
@@ -151,11 +134,17 @@ invCont.addClassification = async function (req, res, next) {
 invCont.buildAddInventory = async function (req, res, next) {
   let nav = await utilities.getNav()
   let classificationSelect = await utilities.buildClassificationList()
+  let messages = null
+  if (req.flash && req.flash("notice")) {
+    messages = {
+      notice: req.flash("notice")
+    }
+  }
   res.render("./inventory/add-inventory", {
     title: "Add New Vehicle",
     nav,
     classificationSelect,
-    messages: null,
+    messages,
     errors: null,
   })
 }
@@ -197,33 +186,17 @@ invCont.addInventory = async function (req, res, next) {
         "notice",
         `The ${inv_make} ${inv_model} was successfully added to inventory.`
       )
-      let messages = null
-      if (req.flash) {
-        const flashMessages = req.flash()
-        if (Object.keys(flashMessages).length > 0) {
-          messages = flashMessages
-        }
-      }
-      res.status(201).render("inventory/management", {
-        title: "Inventory Management",
-        nav,
-        messages,
-        errors: null,
-      })
+      return res.redirect("/inv/")
     } else {
       req.flash("notice", "Sorry, the addition failed.")
-      let messages = null
-      if (req.flash) {
-        const flashMessages = req.flash()
-        if (Object.keys(flashMessages).length > 0) {
-          messages = flashMessages
-        }
-      }
+      let classificationSelect = await utilities.buildClassificationList(classification_id)
       res.status(501).render("inventory/add-inventory", {
         title: "Add New Vehicle",
         nav,
-        classificationSelect: await utilities.buildClassificationList(classification_id),
-        messages,
+        classificationSelect,
+        messages: {
+          notice: req.flash("notice")
+        },
         errors: null,
         inv_make,
         inv_model,
@@ -239,18 +212,14 @@ invCont.addInventory = async function (req, res, next) {
   } catch (error) {
     console.error("Add inventory error:", error)
     req.flash("notice", "Sorry, there was an error processing the request.")
-    let messages = null
-    if (req.flash) {
-      const flashMessages = req.flash()
-      if (Object.keys(flashMessages).length > 0) {
-        messages = flashMessages
-      }
-    }
+    let classificationSelect = await utilities.buildClassificationList(classification_id)
     res.status(500).render("inventory/add-inventory", {
       title: "Add New Vehicle",
       nav,
-      classificationSelect: await utilities.buildClassificationList(classification_id),
-      messages,
+      classificationSelect,
+      messages: {
+        notice: req.flash("notice")
+      },
       errors: null,
       inv_make,
       inv_model,

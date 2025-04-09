@@ -2,11 +2,19 @@
 <h1>Account Management</h1>
 
 <!-- Message Block -->
-<% if (messages && messages.length > 0) { %>
+<% if (messages) { %>
   <div class="notice">
-    <% messages.forEach(msg => { %>
-      <p><%= msg %></p>
-    <% }) %>
+    <% if (Array.isArray(messages)) { %>
+      <% messages.forEach(msg => { %>
+        <p><%= msg %></p>
+      <% }) %>
+    <% } else if (typeof messages === 'object') { %>
+      <% Object.keys(messages).forEach(key => { %>
+        <% messages[key].forEach(msg => { %>
+          <p><%= msg %></p>
+        <% }) %>
+      <% }) %>
+    <% } %>
   </div>
 <% } %>
 
