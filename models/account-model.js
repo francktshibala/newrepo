@@ -6,7 +6,8 @@ const pool = require("../database/")
 async function registerAccount(account_firstname, account_lastname, account_email, account_password){
   try {
     const sql = "INSERT INTO account (account_firstname, account_lastname, account_email, account_password) VALUES ($1, $2, $3, $4) RETURNING *"
-    return await pool.query(sql, [account_firstname, account_lastname, account_email, account_password])
+    const result = await pool.query(sql, [account_firstname, account_lastname, account_email, account_password])
+    return result.rowCount > 0
   } catch (error) {
     return error.message
   }
@@ -34,7 +35,8 @@ async function getAccountByEmail(account_email) {
     const result = await pool.query(sql, [account_email])
     return result.rows[0]
   } catch (error) {
-    return new Error("No matching email found")
+    console.error("Error in getAccountByEmail:", error)
+    return null
   }
 }
 
@@ -47,7 +49,8 @@ async function getAccountById(account_id) {
     const result = await pool.query(sql, [account_id])
     return result.rows[0]
   } catch (error) {
-    return new Error("No account found")
+    console.error("Error in getAccountById:", error)
+    return null
   }
 }
 
@@ -60,7 +63,8 @@ async function updateAccount(account_id, account_firstname, account_lastname, ac
     const result = await pool.query(sql, [account_firstname, account_lastname, account_email, account_id])
     return result.rowCount > 0
   } catch (error) {
-    return error.message
+    console.error("Error in updateAccount:", error)
+    return false
   }
 }
 
@@ -73,7 +77,8 @@ async function updatePassword(account_id, account_password) {
     const result = await pool.query(sql, [account_password, account_id])
     return result.rowCount > 0
   } catch (error) {
-    return error.message
+    console.error("Error in updatePassword:", error)
+    return false
   }
 }
 

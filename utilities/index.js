@@ -111,6 +111,7 @@ Util.checkJWTToken = (req, res, next) => {
       process.env.ACCESS_TOKEN_SECRET,
       function (err, accountData) {
         if (err) {
+          console.error("JWT Verification Error:", err)
           req.flash("notice", "Please log in")
           res.clearCookie("jwt")
           return res.redirect("/account/login")
@@ -121,6 +122,7 @@ Util.checkJWTToken = (req, res, next) => {
       }
     )
   } else {
+    res.locals.loggedin = 0
     next()
   }
 }
@@ -135,6 +137,7 @@ Util.checkLogin = (req, res, next) => {
       process.env.ACCESS_TOKEN_SECRET,
       function (err, accountData) {
         if (err) {
+          console.error("JWT Verification Error in checkLogin:", err)
           req.flash("notice", "Please log in")
           res.clearCookie("jwt")
           return res.redirect("/account/login")
@@ -160,6 +163,7 @@ Util.checkAccountType = (req, res, next) => {
       process.env.ACCESS_TOKEN_SECRET,
       function (err, accountData) {
         if (err) {
+          console.error("JWT Verification Error in checkAccountType:", err)
           req.flash("notice", "Please log in")
           res.clearCookie("jwt")
           return res.redirect("/account/login")
@@ -207,7 +211,12 @@ Util.buildClassificationList = async function (classification_id = null) {
 * Check if Classification exists
 * ************************************ */
 Util.checkExistingClassification = async (classification_name) => {
-  return await invModel.checkExistingClassification(classification_name)
+  try {
+    return await invModel.checkExistingClassification(classification_name)
+  } catch (error) {
+    console.error("Error checking classification:", error)
+    return false
+  }
 }
 
 /* **************************************

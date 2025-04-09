@@ -91,24 +91,40 @@ async function registerAccount(req, res) {
 async function accountLogin(req, res) {
   let nav = await utilities.getNav()
   const { account_email, account_password } = req.body
-  const accountData = await accountModel.getAccountByEmail(account_email)
-  if (!accountData) {
-    req.flash("notice", "Please check your credentials and try again.")
-    res.status(400).render("account/login", {
-      title: "Login",
-      nav,
-      errors: null,
-      messages: req.flash("notice"),
-      account_email,
-    })
-    return
-  }
+  
   try {
-    if (await bcrypt.compare(account_password, accountData.account_password)) {
+    const accountData = await accountModel.getAccountByEmail(account_email)
+    
+    if (!accountData) {
+      req.flash("notice", "Please check your credentials and try again.")
+      res.status(400).render("account/login", {
+        title: "Login",
+        nav,
+        errors: null,
+        messages: req.flash("notice"),
+        account_email,
+      })
+      return
+    }
+    
+    // Check password
+    const passwordMatch = await bcrypt.compare(account_password, accountData.account_password)
+    
+    if (passwordMatch) {
+      // Remove the password before storing in JWT
       delete accountData.account_password
-      const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 })
+      
+      // Create JWT
+      const accessToken = jwt.sign(
+        accountData, 
+        process.env.ACCESS_TOKEN_SECRET, 
+        { expiresIn: 3600 }
+      )
+      
+      // Set cookie
       res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
       
+      // Redirect to account management
       return res.redirect("/account/")
     } else {
       req.flash("notice", "Please check your credentials and try again.")
@@ -121,7 +137,15 @@ async function accountLogin(req, res) {
       })
     }
   } catch (error) {
-    return new Error('Access Forbidden')
+    console.error("Login error:", error)
+    req.flash("notice", "An error occurred during login. Please try again later.")
+    res.status(500).render("account/login", {
+      title: "Login",
+      nav,
+      errors: null,
+      messages: req.flash("notice"),
+      account_email,
+    })
   }
 }
 
