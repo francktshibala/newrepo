@@ -1,0 +1,265 @@
+/* Review System Styles */
+
+/* Star Rating Styles */
+.star {
+    color: #ccc;
+    font-size: 24px;
+    display: inline-block;
+    margin-right: 2px;
+  }
+  
+  .star.full {
+    color: #f8ce0b;
+  }
+  
+  .star.half {
+    position: relative;
+    color: #ccc;
+  }
+  
+  .star.half:before {
+    content: '★';
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #f8ce0b;
+    width: 50%;
+    overflow: hidden;
+  }
+  
+  .star.empty {
+    color: #ccc;
+  }
+  
+  .rating-number {
+    margin-left: 5px;
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
+  /* Reviews Section */
+  .reviews-section {
+    margin-top: 40px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+  }
+  
+  .reviews-section h2 {
+    margin-bottom: 20px;
+    color: var(--nav-hover-link-color);
+  }
+  
+  /* Average Rating Display */
+  .average-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .rating-stars {
+    margin-bottom: 5px;
+  }
+  
+  .rating-average {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .review-count {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  /* Write Review Button */
+  .write-review, .login-to-review {
+    margin-bottom: 30px;
+  }
+  
+  .login-to-review a {
+    color: var(--nav-hover-link-color);
+    text-decoration: underline;
+  }
+  
+  /* Reviews List */
+  .reviews-list {
+    margin-top: 20px;
+  }
+  
+  .review-item {
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: white;
+  }
+  
+  .review-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .review-author {
+    font-weight: bold;
+  }
+  
+  .review-date {
+    color: #666;
+  }
+  
+  .review-text {
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  
+  .review-actions {
+    margin-top: 15px;
+    text-align: right;
+  }
+  
+  /* User Reviews Page */
+  .user-reviews-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .user-review-item {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: white;
+  }
+  
+  .review-vehicle h3 {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+  }
+  
+  .review-vehicle a {
+    color: var(--nav-hover-link-color);
+    text-decoration: none;
+  }
+  
+  .review-vehicle a:hover {
+    text-decoration: underline;
+  }
+  
+  .review-content {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .back-link {
+    margin-top: 30px;
+  }
+  
+  /* Review Form Styles */
+  .rating-select {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+  }
+  
+  .rating-select input[type="radio"] {
+    display: none;
+  }
+  
+  .rating-select label {
+    display: inline-block;
+    cursor: pointer;
+    width: auto;
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+  }
+  
+  .rating-select label:hover,
+  .rating-select label:hover ~ label,
+  .rating-select input[type="radio"]:checked ~ label {
+    background-color: #f8ce0b;
+    color: #333;
+  }
+  
+  .form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .btn-secondary {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-weight: bold;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .btn-small {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 5px;
+    font-size: 0.9rem;
+    background-color: var(--nav-hover-link-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 3px;
+  }
+  
+  .btn-small:hover {
+    background-color: var(--accent3-color);
+  }
+  
+  .btn-danger {
+    background-color: #d9534f;
+  }
+  
+  .btn-danger:hover {
+    background-color: #c9302c;
+  }
+  
+  /* Responsive Adjustments */
+  @media (min-width: 768px) {
+    .review-header {
+      flex-wrap: nowrap;
+    }
+    
+    .user-review-item {
+      flex-direction: row;
+    }
+    
+    .review-vehicle {
+      width: 30%;
+      padding-right: 20px;
+    }
+    
+    .review-content {
+      width: 70%;
+    }
+    
+    .form-container {
+      max-width: 600px;
+    }
+  }

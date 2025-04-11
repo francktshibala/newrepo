@@ -1,0 +1,82 @@
+<!-- Edit Review View -->
+<h1>Edit Review for <%= vehicleName %></h1>
+
+<!-- Message Block -->
+<% if (messages && messages.length > 0) { %>
+  <div class="notice">
+    <% messages.forEach(msg => { %>
+      <p><%= msg %></p>
+    <% }) %>
+  </div>
+<% } %>
+
+<!-- Error Block -->
+<% if (errors) { %>
+  <div class="notice error-notice">
+    <ul>
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  </div>
+<% } %>
+
+<!-- Edit Review Form -->
+<div class="form-container">
+  <form id="edit-review-form" action="/reviews/update" method="post">
+    <div class="form-group">
+      <label for="review_rating">Rating:</label>
+      <div class="rating-select">
+        <input type="radio" id="rating-5" name="review_rating" value="5" <%= review_rating == 5 ? 'checked' : '' %>>
+        <label for="rating-5">5 stars</label>
+        
+        <input type="radio" id="rating-4" name="review_rating" value="4" <%= review_rating == 4 ? 'checked' : '' %>>
+        <label for="rating-4">4 stars</label>
+        
+        <input type="radio" id="rating-3" name="review_rating" value="3" <%= review_rating == 3 ? 'checked' : '' %>>
+        <label for="rating-3">3 stars</label>
+        
+        <input type="radio" id="rating-2" name="review_rating" value="2" <%= review_rating == 2 ? 'checked' : '' %>>
+        <label for="rating-2">2 stars</label>
+        
+        <input type="radio" id="rating-1" name="review_rating" value="1" <%= review_rating == 1 ? 'checked' : '' %>>
+        <label for="rating-1">1 star</label>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="review_text">Your Review:</label>
+      <textarea id="review_text" name="review_text" rows="6" minlength="10" maxlength="1000" required><%= review_text %></textarea>
+      <span class="form-instructions">Between 10 and 1000 characters</span>
+    </div>
+    
+    <input type="hidden" name="review_id" value="<%= review_id %>">
+    
+    <div class="form-buttons">
+      <button type="submit" class="btn">Update Review</button>
+      <a href="/reviews/user" class="btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<!-- Simple client-side validation -->
+<script>
+  document.getElementById('edit-review-form').addEventListener('submit', function(event) {
+    const reviewText = document.getElementById('review_text').value.trim();
+    
+    if (reviewText.length < 10) {
+      event.preventDefault();
+      alert('Your review must be at least 10 characters long.');
+    } else if (reviewText.length > 1000) {
+      event.preventDefault();
+      alert('Your review must be less than 1000 characters long.');
+    }
+    
+    // Check that a rating is selected
+    const ratingSelected = document.querySelector('input[name="review_rating"]:checked');
+    if (!ratingSelected) {
+      event.preventDefault();
+      alert('Please select a rating.');
+    }
+  });
+</script>

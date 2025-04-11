@@ -37,6 +37,9 @@
   <!-- Update account information link - this appears for all users -->
   <p><a href="/account/update/<%= account_id %>">Update Account Information</a></p>
   
+  <!-- My Reviews - ADD THIS SECTION -->
+  <p><a href="/reviews/user">My Reviews</a></p>
+  
   <!-- Inventory Management for Employee and Admin types only -->
   <% if (account_type === 'Employee' || account_type === 'Admin') { %>
     <h3>Inventory Management</h3>

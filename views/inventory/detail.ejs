@@ -1,11 +1,96 @@
 <!-- Content Heading -->
 <% if (title) { %>
-    <!-- Display the vehicle make and model as the title -->
-    <h1><%= title %></h1>
-  <% } else {
-    // Redirect to the home page if the title is not provided
-    res.redirect('/');
-  } %>
+  <!-- Display the vehicle make and model as the title -->
+  <h1><%= title %></h1>
+<% } else {
+  // Redirect to the home page if the title is not provided
+  res.redirect('/');
+} %>
+
+<!-- Message Block -->
+<% if (messages && messages.length > 0) { %>
+  <div class="notice">
+    <% messages.forEach(msg => { %>
+      <p><%= msg %></p>
+    <% }) %>
+  </div>
+<% } %>
+
+<!-- Vehicle Detail Display -->
+<%- vehicleHtml %>
+
+<!-- Reviews Section -->
+<div class="reviews-section">
+  <h2>Customer Reviews</h2>
   
-  <!-- Vehicle Detail Display -->
-  <%- vehicleHtml %>
+  <!-- Average Rating Display -->
+  <div class="average-rating">
+    <% if (reviewCount > 0) { %>
+      <div class="rating-stars">
+        <% for (let i = 1; i <= 5; i++) { %>
+          <% if (i <= Math.floor(averageRating)) { %>
+            <span class="star full">★</span>
+          <% } else if (i === Math.ceil(averageRating) && !Number.isInteger(averageRating)) { %>
+            <span class="star half">★</span>
+          <% } else { %>
+            <span class="star empty">☆</span>
+          <% } %>
+        <% } %>
+      </div>
+      <div class="rating-average"><%= averageRating %> out of 5</div>
+      <div class="review-count"><%= reviewCount %> customer <%= reviewCount === 1 ? 'review' : 'reviews' %></div>
+    <% } else { %>
+      <p>No reviews yet. Be the first to review this vehicle!</p>
+    <% } %>
+  </div>
+  
+  <!-- Write a Review Button -->
+  <% if (loggedin && !userHasReviewed) { %>
+    <div class="write-review">
+      <a href="/reviews/add/<%= inventoryId %>" class="btn">Write a Review</a>
+    </div>
+  <% } else if (!loggedin) { %>
+    <div class="login-to-review">
+      <p>Please <a href="/account/login">log in</a> to write a review.</p>
+    </div>
+  <% } %>
+  
+  <!-- Reviews List -->
+  <% if (reviews && reviews.length > 0) { %>
+    <div class="reviews-list">
+      <% reviews.forEach(review => { %>
+        <div class="review-item">
+          <div class="review-header">
+            <div class="review-rating">
+              <% for (let i = 1; i <= 5; i++) { %>
+                <% if (i <= review.review_rating) { %>
+                  <span class="star full">★</span>
+                <% } else { %>
+                  <span class="star empty">☆</span>
+                <% } %>
+              <% } %>
+              <span class="rating-number"><%= review.review_rating %>/5</span>
+            </div>
+            <div class="review-author">
+              <%= review.account_firstname %> <%= review.account_lastname %>
+            </div>
+            <div class="review-date">
+              <%= new Date(review.review_date).toLocaleDateString('en-US', 
+                  { year: 'numeric', month: 'long', day: 'numeric' }) %>
+            </div>
+          </div>
+          <div class="review-text"><%= review.review_text %></div>
+          
+          <!-- Edit/Delete options if user owns the review -->
+          <% if (loggedin && locals.accountData.account_id === review.account_id) { %>
+            <div class="review-actions">
+              <a href="/reviews/edit/<%= review.review_id %>" class="btn-small">Edit</a>
+              <a href="/reviews/delete/<%= review.review_id %>" class="btn-small btn-danger" 
+                 onclick="return confirm('Are you sure you want to delete this review?')">Delete</a>
+            </div>
+          <% } %>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>

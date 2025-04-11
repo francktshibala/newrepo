@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
+const reviewModel = require("../models/review-model")
 
 const invCont = {}
 
@@ -28,15 +29,35 @@ invCont.buildByInventoryId = async function (req, res, next) {
   try {
     const inventory_id = req.params.inventoryId
     const data = await invModel.getInventoryItemById(inventory_id)
+    
+    // Get reviews for this vehicle
+    const reviews = await reviewModel.getReviewsByInventoryId(inventory_id)
+    
+    // Get average rating
+    const ratingData = await reviewModel.getAverageRating(inventory_id)
+    
+    // Check if user has already reviewed (if logged in)
+    let userHasReviewed = false
+    if (res.locals.loggedin) {
+      userHasReviewed = await reviewModel.hasUserReviewed(inventory_id, res.locals.accountData.account_id)
+    }
+    
     const vehicleHtml = await utilities.buildVehicleDetailHtml(data)
     let nav = await utilities.getNav()
     const vehicleName = `${data.inv_make} ${data.inv_model}`
+    
     res.render("./inventory/detail", {
       title: vehicleName,
       nav,
       vehicleHtml,
-      messages: null,
-      errors: null
+      reviews,
+      averageRating: ratingData.average_rating,
+      reviewCount: ratingData.review_count,
+      userHasReviewed,
+      inventoryId: inventory_id,
+      messages: req.flash("notice"),
+      errors: null,
+      loggedin: res.locals.loggedin
     })
   } catch (error) {
     console.error("Error in buildByInventoryId: ", error)

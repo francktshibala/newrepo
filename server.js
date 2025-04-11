@@ -13,6 +13,7 @@ const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventory"); 
 const accountRoute = require("./routes/accountRoute");
+const reviewRoute = require("./routes/reviewRoute"); // ADD THIS LINE
 const errorRoute = require("./routes/error");
 const utilities = require("./utilities");
 const session = require("express-session");
@@ -77,6 +78,9 @@ app.use("/inv", inventoryRoute);
 
 // Account routes
 app.use("/account", accountRoute);
+
+// Review routes - ADD THIS SECTION
+app.use("/reviews", reviewRoute);
 
 // Error routes
 app.use("/error", errorRoute);
