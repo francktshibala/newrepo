@@ -29,7 +29,7 @@ async function getReviewsByInventoryId(inv_id) {
     return result.rows
   } catch (error) {
     console.error("Error getting reviews by inventory ID:", error)
-    throw error
+    return [] // Return empty array instead of throwing error
   }
 }
 
@@ -48,7 +48,7 @@ async function getReviewsByAccountId(account_id) {
     return result.rows
   } catch (error) {
     console.error("Error getting reviews by account ID:", error)
-    throw error
+    return [] // Return empty array instead of throwing error
   }
 }
 
@@ -104,7 +104,8 @@ async function getAverageRating(inv_id) {
     return result.rows[0]
   } catch (error) {
     console.error("Error getting average rating:", error)
-    throw error
+    // Return default values instead of throwing
+    return { average_rating: 0, review_count: 0 }
   }
 }
 
@@ -118,7 +119,7 @@ async function hasUserReviewed(inv_id, account_id) {
     return parseInt(result.rows[0].review_count) > 0
   } catch (error) {
     console.error("Error checking if user has reviewed:", error)
-    throw error
+    return false
   }
 }
 

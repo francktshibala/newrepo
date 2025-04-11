@@ -76,16 +76,23 @@ reviewController.addReview = async function (req, res, next) {
  *  Build user reviews view
  * ************************** */
 reviewController.buildUserReviews = async function (req, res, next) {
-  const account_id = res.locals.accountData.account_id
-  
   try {
+    // Make sure account data is available
+    if (!res.locals.accountData || !res.locals.accountData.account_id) {
+      req.flash("notice", "Please log in to view your reviews.")
+      return res.redirect("/account/login")
+    }
+    
+    const account_id = res.locals.accountData.account_id
+    
+    // Get user reviews
     const userReviews = await reviewModel.getReviewsByAccountId(account_id)
     let nav = await utilities.getNav()
     
     res.render("reviews/user-reviews", {
       title: "My Reviews",
       nav,
-      reviews: userReviews,
+      reviews: userReviews || [], // Ensure reviews is always an array
       errors: null,
       messages: req.flash("notice")
     })
