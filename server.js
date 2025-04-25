@@ -68,6 +68,22 @@ app.use(async (req, res, next) => {
   next();
 });
 
+// Add this after your existing middleware setup
+if (process.env.NODE_ENV === 'production') {
+  // Serve React static files
+  app.use(express.static(path.join(__dirname, 'frontend/dist')));
+  
+  // Handle React routing, return all requests to React app
+  app.get('*', (req, res, next) => {
+    // Skip API routes and direct them to the API handlers
+    if (req.url.startsWith('/api')) {
+      return next();
+    }
+    
+    res.sendFile(path.join(__dirname, 'frontend/dist', 'index.html'));
+  });
+}
+
 /* ***********************
  * Routes
  *************************/

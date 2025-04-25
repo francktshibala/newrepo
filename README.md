@@ -1,4 +1,56 @@
+# CSE Motors Enhanced
+
+A comprehensive dealership management system with advanced features for vehicle inventory, customer management, and e-commerce capabilities.
+
+## Enhanced Features
+
+This project extends the base CSE Motors implementation with several modern features:
+
+### User Experience Enhancements
+- **Modern React Frontend**: A complete React-based user interface with responsive design
+- **Advanced Authentication**: JWT-based authentication with role-based access control
+- **Vehicle Media Gallery**: Multiple image support with thumbnails and gallery view
+
+### E-commerce Features
+- **Shopping Cart System**: Add vehicles to cart, manage quantities, and checkout
+- **Financing Calculator**: Calculate monthly payments with customizable terms
+- **Vehicle Comparison Tool**: Compare features side-by-side
+
+### Search & Discovery
+- **Advanced Search Functionality**: Filter by multiple criteria including make, model, price range
+- **Recommendation Engine**: Suggested vehicles based on browsing history
+
+### Reviews & Ratings
+- **Enhanced Review System**: Leave, edit, and delete reviews with ratings
+- **User Review Management**: View and manage your submitted reviews
+
+### Technical Improvements
+- **RESTful API**: Modern API architecture with comprehensive endpoints
+- **Containerization**: Docker configuration for easy deployment
+- **Enhanced Security**: JWT authentication, input validation, and security best practices
+
+## Technologies Used
+
+- **Frontend**: React, React Router, Tailwind CSS, Axios
+- **Backend**: Node.js, Express, JWT Authentication
+- **Database**: PostgreSQL
+- **DevOps**: Docker, Docker Compose
+- **Tools**: Git, VS Code
+
 ## Getting Started
+
+### Prerequisites
+- Node.js (v16+)
+- PostgreSQL
+- Docker (optional)
+
+### Installation
+
+#### Without Docker:
+
+1. Clone the repository
+
+<!-- ## Getting Started
 
 This document is intended to get you started quickly in building a backend driven Node.js application complete with pages and content, backend logic and a PostgreSQL database for data storage.
 ## Prerequisites
@@ -44,4 +96,4 @@ When you installed Git and cloned the remote repository in week 1, you should ha
 
 1. Go to https://cse340-ak3d.onrender.com in a browser tab. Nothing should be visible as the server has not been setup to repond to that route.
 2. Add "/filename.html" to the end of the URL (replacing filename with the name of the file you moved to the public folder).
-3. You should see that page in the browser.
+3. You should see that page in the browser. -->
