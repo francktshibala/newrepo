@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import CartIcon from '../cart/CartIcon';
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -21,6 +22,7 @@ const Header = () => {
               <Link to="/account" className="text-navHoverLink hover:text-accent">
                 My Account
               </Link>
+              <CartIcon />
               <button 
                 onClick={logout}
                 className="text-navHoverLink hover:text-accent"

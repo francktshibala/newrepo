@@ -79,6 +79,64 @@ async function addClassification(classification_name) {
 }
 
 /* ***************************
+ *  Search inventory with filters
+ * ************************** */
+async function searchInventory(searchParams) {
+  try {
+    const { buildSearchFilter } = require('../utilities/search-helpers');
+    const filter = buildSearchFilter(searchParams);
+    
+    let sql = `
+      SELECT i.*, c.classification_name
+      FROM inventory AS i
+      JOIN classification AS c ON i.classification_id = c.classification_id
+    `;
+    
+    if (filter.whereClause) {
+      sql += ` WHERE ${filter.whereClause}`;
+    }
+    
+    sql += ` ORDER BY i.inv_make, i.inv_model`;
+    
+    const result = await pool.query(sql, filter.values);
+    return result.rows;
+  } catch (error) {
+    console.error("Error in searchInventory:", error);
+    throw error;
+  }
+}
+
+// Also add these functions to get distinct makes and colors
+
+/* ***************************
+ *  Get distinct vehicle makes
+ * ************************** */
+async function getDistinctMakes() {
+  try {
+    const sql = "SELECT DISTINCT inv_make FROM inventory ORDER BY inv_make";
+    const result = await pool.query(sql);
+    return result.rows.map(row => row.inv_make);
+  } catch (error) {
+    console.error("Error in getDistinctMakes:", error);
+    throw error;
+  }
+}
+
+/* ***************************
+ *  Get distinct vehicle colors
+ * ************************** */
+async function getDistinctColors() {
+  try {
+    const sql = "SELECT DISTINCT inv_color FROM inventory ORDER BY inv_color";
+    const result = await pool.query(sql);
+    return result.rows.map(row => row.inv_color);
+  } catch (error) {
+    console.error("Error in getDistinctColors:", error);
+    throw error;
+  }
+}
+
+/* ***************************
  *  Add new inventory item
  * ************************** */
 async function addInventory(
@@ -134,5 +192,8 @@ module.exports = {
   getInventoryItemById,
   checkExistingClassification,
   addClassification,
-  addInventory
+  addInventory,
+  searchInventory,
+  getDistinctMakes,
+  getDistinctColors
 };

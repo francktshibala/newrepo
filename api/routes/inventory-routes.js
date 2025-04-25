@@ -72,6 +72,63 @@ router.get('/vehicle/:invId', async (req, res) => {
   }
 });
 
+// Search inventory
+router.get('/search', async (req, res) => {
+  try {
+    // Extract search parameters
+    const searchParams = {
+      query: req.query.q,
+      classification_id: req.query.classification,
+      make: req.query.make,
+      model: req.query.model,
+      year: req.query.year,
+      minPrice: req.query.minPrice,
+      maxPrice: req.query.maxPrice,
+      color: req.query.color
+    };
+    
+    // Get search results
+    const results = await invModel.searchInventory(searchParams);
+    
+    res.json({
+      success: true,
+      count: results.length,
+      results
+    });
+  } catch (error) {
+    console.error('Error searching inventory:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error searching inventory'
+    });
+  }
+});
+
+// Get filter options
+router.get('/filter-options', async (req, res) => {
+  try {
+    // Get distinct makes and colors
+    const [makes, colors, classifications] = await Promise.all([
+      invModel.getDistinctMakes(),
+      invModel.getDistinctColors(),
+      invModel.getClassifications()
+    ]);
+    
+    res.json({
+      success: true,
+      makes,
+      colors,
+      classifications: classifications.rows
+    });
+  } catch (error) {
+    console.error('Error fetching filter options:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching filter options'
+    });
+  }
+});
+
 // Add more inventory API routes as needed...
 
 module.exports = router;
