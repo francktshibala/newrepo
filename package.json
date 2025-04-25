@@ -5,12 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev:backend": "nodemon server.js",
-    "dev:frontend": "cd frontend && npm run dev",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "build": "cd frontend && npm run build",
-    "install:all": "npm install && cd frontend && npm install"
-
+    "dev": "nodemon server.js",
+    "build": "cd frontend && pnpm build"
   },
   "author": "",
   "license": "ISC",
