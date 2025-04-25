@@ -21,6 +21,8 @@ const flash = require("express-flash");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const errorMiddleware = require("./utilities/error-middleware");
+const apiRoutes = require('./api');
+const cors = require('cors');
 
 /* ***********************
  * View Engine and Templates
@@ -35,6 +37,7 @@ app.set("layout", "./layouts/layout"); // not at views root
 // Body parser for handling POST requests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 // Cookie Parser
 app.use(cookieParser());
@@ -89,6 +92,8 @@ app.use("/error", errorRoute);
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'});
 });
+app.use('/api', apiRoutes);
+
 
 /* ***********************
  * Express Error Handler

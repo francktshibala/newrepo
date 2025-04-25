@@ -3,6 +3,7 @@ const accountModel = require("../models/account-model")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
+const jwtHelpers = require('../utilities/jwt-helpers')
 
 /* ****************************************
 *  Deliver login view
@@ -18,6 +19,62 @@ async function buildLogin(req, res, next) {
     messages,
   })
 }
+
+/* ****************************************
+*  Process login with JWT
+* *************************************** */
+async function accountLoginAPI(req, res) {
+  const { account_email, account_password } = req.body;
+  
+  try {
+    const accountData = await accountModel.getAccountByEmail(account_email);
+    
+    if (!accountData) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid credentials"
+      });
+    }
+    
+    // Check password
+    const passwordMatch = await bcrypt.compare(account_password, accountData.account_password);
+    
+    if (passwordMatch) {
+      // Remove the password before sending data
+      delete accountData.account_password;
+      
+      // Generate JWT token
+      const token = jwtHelpers.generateToken(accountData);
+      
+      res.json({
+        success: true,
+        token,
+        account: accountData
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: "Invalid credentials"
+      });
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error during login"
+    });
+  }
+}
+
+/* ****************************************
+*  Process logout
+* *************************************** */
+async function accountLogout(req, res, next) {
+  res.clearCookie("jwt");
+  req.flash("notice", "You have been logged out.");
+  return res.redirect("/");
+}
+
 
 /* ****************************************
 *  Deliver registration view
@@ -285,5 +342,6 @@ module.exports = {
   buildAccountUpdate, 
   updateAccount, 
   updatePassword, 
-  accountLogout
+  accountLogout,
+  accountLoginAPI
 }
