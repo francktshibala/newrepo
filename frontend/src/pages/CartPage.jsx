@@ -43,7 +43,7 @@ const CartPage = () => {
       <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
       
       {cart.items.length === 0 ? (
-        <div className="bg-gray-50 border border-gray-200 rounded-md p-6 text-center mb-6">
+        <div className="bg-gray-100 border border-gray-200 rounded-md p-6 text-center mb-6">
           <p className="mb-4">Your cart is empty.</p>
           <Link 
             to="/inventory" 

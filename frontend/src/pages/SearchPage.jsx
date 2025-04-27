@@ -104,7 +104,7 @@ const SearchPage = () => {
               <p className="text-red-600">{error}</p>
             </div>
           ) : searchResults.length === 0 ? (
-            <div className="bg-gray-50 border border-gray-200 rounded-md p-6 text-center">
+            <div className="bg-gray-100 border border-gray-200 rounded-md p-6 text-center">
               <p className="text-gray-700 mb-4">
                 No vehicles found matching your search criteria.
               </p>
@@ -157,7 +157,7 @@ const SearchPage = () => {
                     </p>
                   </div>
                   
-                  <div className="p-4 bg-gray-50 border-t border-gray-200">
+                  <div className="p-4 bg-gray-100 border-t border-gray-200">
                     <div className="flex space-x-2">
                       <Link
                         to={`/inventory/detail/${vehicle.inv_id}`}

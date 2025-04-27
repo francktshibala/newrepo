@@ -222,7 +222,7 @@ const VehicleDetailPage = () => {
           
           <div>
             {/* Price and CTA */}
-            <div className="bg-gray-50 rounded-lg p-6 mb-6">
+            <div className="bg-gray-100 rounded-lg p-6 mb-6">
               <div className="text-3xl font-bold text-gray-900 mb-4">
                 ${vehicle.inv_price.toLocaleString()}
               </div>
@@ -237,7 +237,7 @@ const VehicleDetailPage = () => {
                 
                 <Link
                   to={`/schedule-test-drive/${vehicle.inv_id}`}
-                  className="block w-full py-3 px-4 border border-navHoverLink text-navHoverLink text-center rounded-md hover:bg-gray-50"
+                  className="block w-full py-3 px-4 border border-navHoverLink text-navHoverLink text-center rounded-md hover:bg-gray-100"
                 >
                   Schedule Test Drive
                 </Link>
