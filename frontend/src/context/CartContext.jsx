@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import { useAuth } from './AuthContext';
+import { cartService } from '../services/api';
 
 const CartContext = createContext(null);
 
@@ -20,12 +20,8 @@ export const CartProvider = ({ children }) => {
     setError(null);
     
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('/api/cart', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      
-      setCart(response.data.cart);
+      const data = await cartService.getCart();
+      setCart(data.cart);
     } catch (err) {
       console.error('Error fetching cart:', err);
       setError('Failed to load cart');
@@ -45,11 +41,7 @@ export const CartProvider = ({ children }) => {
     setError(null);
     
     try {
-      const token = localStorage.getItem('token');
-      await axios.post('/api/cart', { inv_id, quantity }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      
+      await cartService.addToCart(inv_id, quantity);
       fetchCart();
     } catch (err) {
       console.error('Error adding to cart:', err);
@@ -66,11 +58,7 @@ export const CartProvider = ({ children }) => {
     setError(null);
     
     try {
-      const token = localStorage.getItem('token');
-      await axios.put(`/api/cart/item/${inv_id}`, { inv_id, quantity }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      
+      await cartService.updateQuantity(inv_id, quantity);
       fetchCart();
     } catch (err) {
       console.error('Error updating cart:', err);
@@ -87,11 +75,7 @@ export const CartProvider = ({ children }) => {
     setError(null);
     
     try {
-      const token = localStorage.getItem('token');
-      await axios.delete(`/api/cart/item/${inv_id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      
+      await cartService.removeFromCart(inv_id);
       fetchCart();
     } catch (err) {
       console.error('Error removing from cart:', err);
@@ -108,11 +92,7 @@ export const CartProvider = ({ children }) => {
     setError(null);
     
     try {
-      const token = localStorage.getItem('token');
-      await axios.delete('/api/cart', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      
+      await cartService.clearCart();
       setCart({ items: [], subtotal: 0, itemCount: 0 });
     } catch (err) {
       console.error('Error clearing cart:', err);

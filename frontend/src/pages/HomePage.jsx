@@ -1,6 +1,30 @@
 import React from 'react';
 
+// Helper function to check if images exist
+const imageExists = (src) => {
+  try {
+    // This is a client-side check - it won't work during build
+    // but it's a safety measure during runtime
+    const img = new Image();
+    img.src = src;
+    return true;
+  } catch (e) {
+    console.error(`Image not found: ${src}`, e);
+    return false;
+  }
+};
+
+// Fallback image URL
+const fallbackImage = 'https://via.placeholder.com/400x300?text=Image+Not+Found';
+
 const HomePage = () => {
+  // Image paths
+  const deloreanImage = '/images/vehicles/delorean.jpg';
+  const fluxCapImage = '/images/upgrades/flux-cap.png';
+  const flameImage = '/images/upgrades/flame.jpg';
+  const bumperStickerImage = '/images/upgrades/bumper_sticker.jpg';
+  const hubCapImage = '/images/upgrades/hub-cap.jpg';
+  
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <section className="intro mb-10">
@@ -8,9 +32,13 @@ const HomePage = () => {
         
         <div className="relative">
           <img 
-            src="/images/vehicles/delorean.jpg" 
+            src={deloreanImage}
             alt="DMC DeLorean" 
             className="w-full h-auto rounded-lg"
+            onError={(e) => {
+              console.log('Image failed to load:', e.target.src);
+              e.target.src = fallbackImage;
+            }}
           />
           
           <div className="absolute top-10 left-10 bg-gray-800 bg-opacity-70 p-6 rounded-lg max-w-xs">
@@ -36,33 +64,45 @@ const HomePage = () => {
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center">
               <img 
-                src="/images/upgrades/flux-cap.png" 
+                src={fluxCapImage}
                 alt="Flux Capacitor" 
                 className="w-full h-auto mb-2"
+                onError={(e) => {
+                  e.target.src = fallbackImage;
+                }}
               />
               <p>Flux Capacitor</p>
             </div>
             <div className="text-center">
               <img 
-                src="/images/upgrades/flame.jpg" 
+                src={flameImage} 
                 alt="Flame Decals" 
                 className="w-full h-auto mb-2"
+                onError={(e) => {
+                  e.target.src = fallbackImage;
+                }}
               />
               <p>Flame Decals</p>
             </div>
             <div className="text-center">
               <img 
-                src="/images/upgrades/bumper_sticker.jpg" 
+                src={bumperStickerImage}
                 alt="Bumper Stickers" 
                 className="w-full h-auto mb-2"
+                onError={(e) => {
+                  e.target.src = fallbackImage;
+                }}
               />
               <p>Bumper Stickers</p>
             </div>
             <div className="text-center">
               <img 
-                src="/images/upgrades/hub-cap.jpg" 
+                src={hubCapImage}
                 alt="Hub Caps" 
                 className="w-full h-auto mb-2"
+                onError={(e) => {
+                  e.target.src = fallbackImage;
+                }}
               />
               <p>Hub Caps</p>
             </div>
