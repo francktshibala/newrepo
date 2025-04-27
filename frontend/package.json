@@ -14,11 +14,11 @@
   "description": "",
   "dependencies": {
     "@reduxjs/toolkit": "^2.7.0",
-    "@tailwindcss/forms": "^0.5.10",
-    "autoprefixer": "^10.4.21",
+    "@tailwindcss/forms": "^0.5.7",
+    "autoprefixer": "^10.4.19",
     "axios": "^1.9.0",
     "formik": "^2.4.6",
-    "postcss": "^8.5.3",
+    "postcss": "^8.4.38",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",
@@ -26,9 +26,8 @@
     "yup": "^1.6.1"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.4",
     "@vitejs/plugin-react": "^4.4.1",
-    "tailwindcss": "^4.1.4",
+    "tailwindcss": "^3.4.1",
     "vite": "^6.3.3"
   }
 }

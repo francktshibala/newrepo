@@ -1,0 +1,64 @@
+/* Additional utility classes for Tailwind v4 compatibility */
+
+/* Common background colors */
+.bg-gray-50 {
+    background-color: #f9fafb;
+  }
+  
+  .bg-gray-100 {
+    background-color: #f3f4f6;
+  }
+  
+  .bg-yellow-50 {
+    background-color: #fefce8;
+  }
+  
+  .bg-red-50 {
+    background-color: #fef2f2;
+  }
+  
+  .bg-green-50 {
+    background-color: #f0fdf4;
+  }
+  
+  /* Text colors */
+  .text-red-600 {
+    color: #dc2626;
+  }
+  
+  .text-red-700 {
+    color: #b91c1c;
+  }
+  
+  .text-yellow-700 {
+    color: #a16207;
+  }
+  
+  .text-green-700 {
+    color: #15803d;
+  }
+  
+  .text-green-800 {
+    color: #166534;
+  }
+  
+  /* Border colors */
+  .border-red-200 {
+    border-color: #fecaca;
+  }
+  
+  .border-red-500 {
+    border-color: #ef4444;
+  }
+  
+  .border-yellow-200 {
+    border-color: #fef08a;
+  }
+  
+  .border-green-100 {
+    border-color: #dcfce7;
+  }
+  
+  .border-green-500 {
+    border-color: #22c55e;
+  }
